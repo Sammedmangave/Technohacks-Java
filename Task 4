@@ -1,0 +1,82 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class TodoListApp {
+
+    private static ArrayList<String> todoList = new ArrayList<>();
+    private static Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        while (true) {
+            System.out.println("\nTo-Do List Application");
+            System.out.println("1. Add Item");
+            System.out.println("2. Remove Item");
+            System.out.println("3. View Items");
+            System.out.println("4. Exit");
+            System.out.print("Choose an option: ");
+            
+            int option = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (option) {
+                case 1:
+                    addItem();
+                    break;
+                case 2:
+                    removeItem();
+                    break;
+                case 3:
+                    viewItems();
+                    break;
+                case 4:
+                    System.out.println("Exiting...");
+                    scanner.close();
+                    return;
+                default:
+                    System.out.println("Invalid option. Please try again.");
+            }
+        }
+    }
+
+    private static void addItem() {
+        System.out.print("Enter the item to add: ");
+        String item = scanner.nextLine();
+        if (item.isEmpty()) {
+            System.out.println("Item cannot be empty.");
+        } else {
+            todoList.add(item);
+            System.out.println("Item added successfully.");
+        }
+    }
+
+    private static void removeItem() {
+        if (todoList.isEmpty()) {
+            System.out.println("The to-do list is empty.");
+            return;
+        }
+        
+        viewItems(); // Display current items for reference
+        System.out.print("Enter the number of the item to remove: ");
+        int index = scanner.nextInt() - 1;
+        scanner.nextLine(); // Consume newline
+
+        if (index < 0 || index >= todoList.size()) {
+            System.out.println("Invalid item number.");
+        } else {
+            todoList.remove(index);
+            System.out.println("Item removed successfully.");
+        }
+    }
+
+    private static void viewItems() {
+        if (todoList.isEmpty()) {
+            System.out.println("The to-do list is empty.");
+            return;
+        }
+        
+        System.out.println("To-Do List:");
+        for (int i = 0; i < todoList.size(); i++) {
+            System.out.println((i + 1) + ". " + todoList.get(i));
+        }
+    }
+}
